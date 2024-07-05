@@ -45,6 +45,11 @@ export function LoginPage() {
                             name="password"
                             placeholder="Email akun PituChat"
                             className={`w-full h-10 mt-1 border-2 ${(error.email)?"border-red-600":"border-gray-400"} ps-10 pe-2 rounded-lg`}/>
+                        {
+                            (error.email)?
+                                <p className="text-red-600 text-xs mt-1 ms-2">Email tidak boleh kosong</p>
+                                :null
+                        }
                     </div>
                     <label className="font-semibold ms-2 select-none">Password</label>
                     <div className="w-full h-auto">
@@ -62,6 +67,11 @@ export function LoginPage() {
                             name="password"
                             placeholder="Password"
                             className={`w-full h-10 mt-1 border-2 ${(error.password)?"border-red-600":"border-gray-400"} ps-10 pe-12 rounded-lg`}/>
+                        {
+                            (error.password)?
+                                <p className="text-red-600 text-xs mt-1 ms-2">Password tidak boleh kosong</p>
+                                :null
+                        }
                     </div>
                     <div className="w-full items-end justify-end flex mt-2">
                         <a href="#" className="text-blue-500 select-none">Lupa password?</a>
