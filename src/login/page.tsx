@@ -6,7 +6,7 @@ import icEye from "../storage/img/ic/eye.svg";
 import icEyeSlash from "../storage/img/ic/eye-slash.svg";
 import {useState} from "react";
 
-export function LoginPage() {
+export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
