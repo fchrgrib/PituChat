@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import icLogo from './storage/img/logo_pitu.svg';
 import profilePhoto from './storage/img/profile.png';
 import icChevronDown from './storage/img/ic/chevron-down.svg';
@@ -8,6 +8,8 @@ import icTokoSelected from './storage/img/ic/store-clicked.svg';
 import icChat from './storage/img/ic/message-square-dots.svg';
 import icChatSelected from './storage/img/ic/message-square-dots-clicked.svg';
 import icLogout from './storage/img/ic/logout.svg';
+import ChatDashboard from "./home/chat";
+import TokoDashboard from "./home/toko";
 
 interface NavItem {
     name: string,
@@ -66,6 +68,7 @@ function App() {
                 </div>
             </div>
             <div className="flex-1">
+                {(items[0].selected)?<ChatDashboard/>:<TokoDashboard/>}
             </div>
         </div>
     </div>
