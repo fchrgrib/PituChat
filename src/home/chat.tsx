@@ -1,10 +1,12 @@
 import emptySlc from '../storage/img/pana.svg';
 import ellipseBg from '../storage/img/ellipse_bg.svg';
-import {useCallback, useState} from "react";
+import {useCallback, useMemo, useState} from "react";
 import icSearch from '../storage/img/ic/search.svg';
 import icSlider from '../storage/img/ic/slider.svg';
+import icInfo from '../storage/img/ic/infooutlined.svg';
 import {chatPreviewSeed} from "../storage/seed/chat";
 import {ChatCard} from "../component/chat-page/chat-card";
+import icTokped from "../storage/img/tokped.png";
 
 interface NavItem {
     name: string,
@@ -12,7 +14,7 @@ interface NavItem {
 }
 
 export default function ChatDashboard() {
-    const [selected, setSelected] = useState(false)
+    const [selected, setSelected] = useState(true)
     const [items, setItems] = useState<NavItem[]>([
         {name: "Perlu balas", selected: true},
         {name: "Terbalas", selected: false},
@@ -31,6 +33,8 @@ export default function ChatDashboard() {
     const [chatPreview, setChatPreview] = useState(chatPreviewSeed)
     const [searchClicked, setSearchClicked] = useState(false)
     const [optionClicked, setOptionClicked] = useState(false)
+    const [infoClicked, setInfoClicked] = useState(false)
+    const chatSelected = useMemo(()=>chatPreview.filter((chat)=>chat.selected),[chatPreview])
 
     const handleItem = (name:string) =>{
         setItems(items.map((item) => {
@@ -151,7 +155,69 @@ export default function ChatDashboard() {
             </div>
             {
                 selected
-                    ?null
+                    ?(
+                        <div className="w-full h-full flex-1 flex ">
+                            <div className="w-full h-full flex flex-col">
+                                <div className="w-full h-20 bg-gray-100 flex justify-between items-center p-8 border-b-2 border-e-2 border-gray-200">
+                                    <p className="text-lg font-semibold">{chatSelected[0]&& chatSelected[0].name}</p>
+                                    <div className="w-24 h-10 flex items-center justify-end">
+                                        <img
+                                        src={icSearch}
+                                        alt="search"
+                                        className="w-7 h-7 me-4"/>
+                                        <img
+                                        src={icInfo}
+                                        alt="info"
+                                        className="w-7 h-7 cursor-pointer"
+                                        onClick={()=>setInfoClicked(!infoClicked)}/>
+                                    </div>
+                                </div>
+                            </div>
+                            {infoClicked&&(
+                                <div className="w-1/3 h-full border-s-2 border-gray-200">
+                                    <div className="w-full h-20 flex items-center justify-end p-6">
+                                        <p className="text-3xl font-mono cursor-pointer select-none" onClick={()=>setInfoClicked(false)}>X</p>
+                                    </div>
+                                    <div className="w-full h-56 flex flex-col justify-center">
+                                        {chatSelected[0]&&(
+                                            <div>
+                                                <div className="w-full h-20 flex items-center justify-center">
+                                                    <img
+                                                        src={chatSelected[0].path}
+                                                        alt="profile"
+                                                        className="w-20 h-20 rounded-full"/>
+                                                </div>
+                                                <div className="w-full flex h-10 pt-5 items-center justify-center">
+                                                    <p className="text-lg font-semibold">{chatSelected[0].name}</p>
+                                                </div>
+                                                <div className="w-full h-5 flex items-center justify-center pt-5">
+                                                    <p className="text-sm font-normal text-gray-500">Tokopedia</p>
+                                                </div>
+                                                <div className="w-full h-20 flex items-center justify-center pt-10">
+                                                    <div className="w-28 h-6 bg-green-200 rounded-md flex justify-between items-center opacity-70 p-1">
+                                                        <img src={icTokped} alt="tokped" className="w-3 h-3"/>
+                                                        <p className="text-sm font-semibold">Beauty Lovers</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="w-full h-40 mt-10 ps-3">
+                                        <p className="font-semibold">About conservation</p>
+                                        <div className="w-full h-auto flex items-center justify-start pt-5">
+                                            <p className="text-sm font-semibold">Created</p>
+                                            <p className="text-sm font-normal ms-4">20 October 2022</p>
+                                        </div>
+                                        <div className="w-full h-auto flex items-center justify-start pt-2">
+                                            <p className="text-sm font-semibold">Created</p>
+                                            <p className="text-sm font-normal ms-4">20 October 2022</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                            }
+                        </div>
+                    )
                     :(
                         <div className="w-3/4 bg-gray-100 h-full flex flex-col justify-center items-center select-none">
                             <div className="w-1/3 h-1/3 relative">
