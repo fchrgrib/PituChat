@@ -1,8 +1,10 @@
 import emptySlc from '../storage/img/pana.svg';
 import ellipseBg from '../storage/img/ellipse_bg.svg';
-import {useState} from "react";
+import {useCallback, useState} from "react";
 import icSearch from '../storage/img/ic/search.svg';
 import icSlider from '../storage/img/ic/slider.svg';
+import {chatPreviewSeed} from "../storage/seed/chat";
+import {ChatCard} from "../component/chat-page/chat-card";
 
 interface NavItem {
     name: string,
@@ -16,6 +18,7 @@ export default function ChatDashboard() {
         {name: "Terbalas", selected: false},
         {name: "Semua chat", selected: false},
     ]);
+    const [chatPreview, setChatPreview] = useState(chatPreviewSeed)
 
     const handleItem = (name:string) =>{
         setItems(items.map((item) => {
@@ -26,11 +29,21 @@ export default function ChatDashboard() {
         }))
     }
 
+    const handleChatPrev = useCallback((idx:number)=>{
+        setChatPreview(chatPreview.map((chat,index)=>{
+            if (index === idx){
+                return {...chat, selected: true}
+            }
+            return {...chat, selected: false}
+        }))
+        // setSelected(true)
+    },[chatPreview])
+
 
     return (
         <div className="w-full h-full flex">
             <div className="w-1/4 flex-col h-full border-r-2 border-gray-200 flex">
-                <div className="w-full h-20 flex items-center justify-between font-semibold text-xl p-3">
+                <div className="w-full h-20 flex items-center justify-between font-semibold text-xl p-3 select-none">
                     <p>Chat</p>
                     <div className="w-20 h-full flex items-center justify-between cursor-pointer select-none">
                         <img
@@ -58,14 +71,29 @@ export default function ChatDashboard() {
                                     item.name === "Perlu balas"
                                     ?(
                                             <div
-                                                className="bg-blue-600 rounded-xl ms-2 min-w-4 h-4 flex flex-col items-center justify-center
-                                                 text-white text-sm font-sans">1</div>
+                                                className="bg-blue-600 rounded-full ms-2 min-w-4 h-4 flex flex-col items-center justify-center
+                                                 text-white text-sm font-sans p-1">2</div>
                                     )
                                     :null
                                 }
                             </div>
                             )
                         )
+                    }
+                </div>
+                <div className="w-full flex-grow select-none overflow-y-scroll scroll-smooth">
+                    {
+                        chatPreview.map((chat,index)=>(
+                            <ChatCard
+                                name={chat.name}
+                                path_photo={chat.path}
+                                message={chat.lastMessage}
+                                time={chat.time}
+                                unread={chat.unread}
+                                selected={chat.selected}
+                                onClick={()=>{handleChatPrev(index)}}
+                                key={index}/>
+                        ))
                     }
                 </div>
             </div>
