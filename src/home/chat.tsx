@@ -4,9 +4,11 @@ import {useCallback, useMemo, useState} from "react";
 import icSearch from '../storage/img/ic/search.svg';
 import icSlider from '../storage/img/ic/slider.svg';
 import icInfo from '../storage/img/ic/infooutlined.svg';
-import {chatPreviewSeed} from "../storage/seed/chat";
+import {chatMessagesSeed, chatPreviewSeed} from "../storage/seed/chat";
 import {ChatCard} from "../component/chat-page/chat-card";
 import icTokped from "../storage/img/tokped.png";
+import icFile from "../storage/img/ic/ic-file.svg";
+import {ChatBox} from "../component/chat-page/chat-box";
 
 interface NavItem {
     name: string,
@@ -119,8 +121,8 @@ export default function ChatDashboard() {
                                 onClick={()=>{handleItem(item.name)}}
                                 className={`w-2/3 h-full flex items-center justify-center cursor-pointer
                                 ${(item.selected)
-                                    ?"border-b-4 border-blue-600 font-semibold"
-                                    :"border-b-4 border-gray-100 font-semibold text-gray-500 select-none"}`}
+                                    ?"border-b-4 border-blue-600 font-semibold md:text-sm xl:text-base"
+                                    :"border-b-4 border-gray-100 font-semibold text-gray-500 select-none md:text-sm xl:text-base"}`}
                                 key={index}>
                                 <p>{item.name}</p>
                                 {
@@ -171,6 +173,42 @@ export default function ChatDashboard() {
                                         className="w-7 h-7 cursor-pointer"
                                         onClick={()=>setInfoClicked(!infoClicked)}/>
                                     </div>
+                                </div>
+
+                                <div className="w-full md:h-[30rem] xl:h-[29rem] 3xl:h-[64rem] bg-blue-100 flex flex-col items-center p-5">
+                                    {
+                                        chatMessagesSeed.map((chat,index)=> {
+                                            if (chat.self){
+                                                return(
+                                                    <ChatBox
+                                                    message={chat.message}
+                                                    time={chat.time}
+                                                    self={chat.self}
+                                                    key={index}/>
+                                                )
+                                            }else{
+                                                return(
+                                                    <ChatBox
+                                                    message={chat.message}
+                                                    name={(chatSelected[0]?chatSelected[0].name:"")}
+                                                    path_photo={(chatSelected[0]?chatSelected[0].path:"")}
+                                                    self={chat.self}
+                                                    time={chat.time}
+                                                    key={index}/>
+                                                )
+                                            }
+                                        })
+                                    }
+                                </div>
+                                <div className="w-full flex-1 flex items-center p-2">
+                                    <img
+                                    src={icFile}
+                                    alt="file"
+                                    className="w-6 h-6"/>
+                                    <input
+                                    type="text"
+                                    placeholder="Type a message"
+                                    className="w-full h-5/6 p-4 ms-2 rounded-full border-2 border-gray-200"/>
                                 </div>
                             </div>
                             {infoClicked&&(

@@ -12,11 +12,11 @@ export const ChatCard = (props: { name:string, message:string, time:string, unre
                 <div className="w-full h-full flex-col">
                     <div className="w-full h-3/6 flex-col">
                         <div className="w-full h-auto flex justify-between items-center ps-3 pe-3 pt-5">
-                            <p className="font-semibold text-lg">{props.name}</p>
+                            <p className="font-semibold xl:text-lg md:text-base">{props.name}</p>
                             <p className="text-gray-500 text-xs">{props.time}</p>
                         </div>
                         <div className="w-full h-auto flex justify-between items-center ps-3 pe-3">
-                            <p className="text-gray-500 text-sm">{`${props.message.slice(0,34)}...`}</p>
+                            <p className="text-gray-500 xl:text-sm md:text-xs">{`${props.message.slice(0,34)}...`}</p>
                             {
                                 props.unread>0
                                 ?(
