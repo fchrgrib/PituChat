@@ -2,7 +2,9 @@ import icTokped from '../../storage/img/tokped.png'
 
 export const ChatCard = (props: { name:string, message:string, time:string, unread:number, selected:boolean,path_photo: string, onClick:()=>void }) => {
     return(
-        <div className="w-full min-h-20 max-h-32 h-1/4 flex-col border-b-2 border-gray-200" onClick={props.onClick}>
+        <div
+            className={`w-full min-h-20 max-h-32 h-1/4 flex-col border-b-2 border-gray-200 ${props.selected?"bg-gray-100":null}`}
+            onClick={props.onClick}>
             <div className="w-full h-full flex">
                 <div className="w-16 h-14 flex-col ps-2 pt-6">
                     <img src={props.path_photo} className="rounded-full w-12 h-12" alt="profile"/>
