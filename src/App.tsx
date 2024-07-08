@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import icLogo from './storage/img/logo_pitu.svg';
 import profilePhoto from './storage/img/profile.png';
 import icChevronDown from './storage/img/ic/chevron-down.svg';
@@ -10,6 +10,8 @@ import icChatSelected from './storage/img/ic/message-square-dots-clicked.svg';
 import icLogout from './storage/img/ic/logout.svg';
 import ChatDashboard from "./home/chat";
 import TokoDashboard from "./home/toko";
+import {useNavigate} from "react-router-dom";
+import Cookies from "js-cookie";
 
 interface NavItem {
     name: string,
@@ -23,6 +25,14 @@ function App() {
         {name: "Chat", selected: true, ic_selected: icChatSelected, ic_unselected: icChat},
         {name: "Toko", selected: false, ic_selected: icTokoSelected, ic_unselected: icToko},
     ]);
+    const token = Cookies.get('token')
+    const navigate = useNavigate()
+
+    useEffect(()=>{
+        if (!token){
+            navigate('/login', {replace: true})
+        }
+    },[])
 
     const handleItem = useCallback((name:string) =>{
         setItems(items.map((item) => {
@@ -64,7 +74,10 @@ function App() {
                         selected={false}
                         ic_selected={icLogout}
                         ic_unselected={icLogout}
-                        onClick={()=>{}}/>
+                        onClick={()=>{
+                            navigate('/login', {replace: true})
+                            Cookies.remove('token')
+                        }}/>
                 </div>
             </div>
             <div className="flex-1">

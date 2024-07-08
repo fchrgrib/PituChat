@@ -5,12 +5,16 @@ import icLock from "../storage/img/ic/lock.svg";
 import icEye from "../storage/img/ic/eye.svg";
 import icEyeSlash from "../storage/img/ic/eye-slash.svg";
 import {useState} from "react";
+import Cookies from "js-cookie";
+import {useNavigate} from "react-router-dom";
 
 export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState({email: false, password: false})
+    const navigate = useNavigate()
+
     const handlePost = () =>{
         if (email === ""){
             setError({...error, email: true})
@@ -21,7 +25,8 @@ export default function LoginPage() {
             return
         }
 
-        // compare here
+        Cookies.set('token', '1234', { expires: 7 })
+        navigate('/')
     }
     return (
         <div className="min-w-screen h-screen flex bg-white">
