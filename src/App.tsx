@@ -40,7 +40,7 @@ function App() {
                 <img src={icLogo} alt="logo" className="w-15 h-15 select-none"/>
                 <h1 className="text-2xl font-bold select-none">PituChat</h1>
             </div>
-            <div className="flex items-center me-10">
+            <div className="flex items-center me-10 select-none">
                 <img src={profilePhoto} className="w-12 h-12" alt="profile"/>
                 <img src={icChevronDown} alt="dropdown"/>
             </div>

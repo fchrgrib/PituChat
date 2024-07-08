@@ -16,7 +16,7 @@ interface NavItem {
 }
 
 export default function ChatDashboard() {
-    const [selected, setSelected] = useState(true)
+    const [selected, setSelected] = useState(false)
     const [items, setItems] = useState<NavItem[]>([
         {name: "Perlu balas", selected: true},
         {name: "Terbalas", selected: false},
@@ -54,7 +54,7 @@ export default function ChatDashboard() {
             }
             return {...chat, selected: false}
         }))
-        // setSelected(true)
+        setSelected(true)
     },[chatPreview])
 
 
